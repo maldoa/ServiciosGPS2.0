@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Posición de GPS</string>
+    <string name="servicioHilo">Servicio hilo principal</string>
+    <string name="intentService">IntentService</string>
+    <string name="servicetopSelf">Servicio Stopself</string>
+    <string name="latitudLongitud">Latitud y Longitud:</string>
+</resources>
