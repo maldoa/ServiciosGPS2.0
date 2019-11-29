@@ -21,12 +21,15 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".ServicioIntentService"
+            android:name=".ServicioStopSelf"
             android:enabled="true"
-            android:exported="true"></service>
-
+            android:exported="true" />
         <service
             android:name=".ServicioHiloPrincipal"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".ServicioIntentService"
             android:enabled="true"
             android:exported="true"></service>
     </application>

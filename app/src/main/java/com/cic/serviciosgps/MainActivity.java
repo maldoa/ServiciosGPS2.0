@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private final static int ALL_PERMISSIONS_RESULT = 101;
     LocationTrack locationTrack;
     public static ProgressBar pgsBar;
+    public static Button intentService, stopSelf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         pgsBar = (ProgressBar) findViewById(R.id.pBar);
+        intentService = (Button) findViewById(R.id.buttonIntentService);
+        stopSelf = (Button) findViewById(R.id.buttonStopSelf);
 
         permissions.add(ACCESS_FINE_LOCATION);
         permissions.add(ACCESS_COARSE_LOCATION);
@@ -86,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void servicioHiloPrincipal(View v)
     {
+        intentService.setEnabled(false);
+        stopSelf.setEnabled(false);
         locationTrack = new LocationTrack(MainActivity.this);
 
 
@@ -101,12 +107,19 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("latitude", latitude);
             startService(intent);
         } else {
-            Log.e("posicion","error de psoicioń actual");
+            Log.e("posicion","error de posición actual");
         }
+        MainActivity.intentService.setEnabled(true);
+        MainActivity.stopSelf.setEnabled(true);
     }
 
 
+
+
+
     public void serviciStopSelf(View v){
+        pgsBar.setVisibility(View.GONE);
+
         locationTrack = new LocationTrack(MainActivity.this);
 
         if (locationTrack.canGetLocation()) {
@@ -118,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("latitude", latitude);
             startService(intent);
         } else {
-            Log.e("posicion","error de psoicioń actual");
+            Log.e("posicion","error de posición actual");
         }
     }
 

@@ -16,37 +16,52 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+
 import static android.content.ContentValues.TAG;
 
 public class ServicioStopSelf extends Service {
     private double longitude, latitude;
 
+    public ServicioStopSelf() {
+    }
+
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        //TODO do something useful
+    public IBinder onBind(Intent intent) {
+        // TODO: Return the communication channel to the service.
+        // throw new UnsupportedOperationException("Not yet implemented");
+        return null;
+    }
+
+    public void onCreate()
+    {
+        super.onCreate();
+    }
+
+    public void onStart(Intent intent, int startID)
+    {
+        System.out.println("El servicio a comenzado...");
         longitude = intent.getExtras().getDouble("longitude");
         latitude = intent.getExtras().getDouble("latitude");
-
-
-        SystemClock.sleep(500);
-
         File root = android.os.Environment.getExternalStorageDirectory();
         File dir = new File (root.getAbsolutePath() + "/Download");
         File file = new File(dir, "LatLong.csv");
+        System.out.println(longitude+","+latitude);
         if(!file.exists())
             writeToSDFile();
         writeToSDFileText();
-
-
-
-        return Service.START_NOT_STICKY;
+        this.stopSelf();
     }
 
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    public void onDestroy()
+    {
+        super.onDestroy();
+        System.out.println("El servicio a terminado...");
     }
+
 
     private void writeToSDFile(){
 
@@ -97,10 +112,5 @@ public class ServicioStopSelf extends Service {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Toast.makeText(this, "Service destroyed by user.", Toast.LENGTH_LONG).show();
     }
 }
